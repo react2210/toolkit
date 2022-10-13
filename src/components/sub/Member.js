@@ -2,7 +2,10 @@ import Layout from '../common/Layout';
 
 function Member() {
     return (
-        <Layout>layout content comes here</Layout>
+        <Layout name={'Member'}>
+            <p>Member contents</p>
+        </Layout>
+
     );
 }
 export default Member;

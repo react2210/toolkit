@@ -168,4 +168,12 @@ main {
   z-index: 1;
 }
 
+.Location figure {
+  background: lightblue;
+}
+
+.Member figure {
+  background: lightgreen;
+}
+
 /*# sourceMappingURL=style.css.map */
