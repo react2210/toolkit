@@ -47,5 +47,24 @@ header .inner #gnb li a {
   font: bold 14px/1 "arial";
   color: #fff;
 }
+header.sub {
+  background: #222;
+}
+header.sub .inner h1 a {
+  color: #fff;
+}
+header.sub .inner #gnb li a {
+  color: #fff;
+}
+header.main {
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+header.main .inner h1 a {
+  color: #555;
+}
+header.main .inner #gnb li a {
+  color: #555;
+}
 
 /*# sourceMappingURL=style.css.map */
