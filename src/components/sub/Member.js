@@ -1,11 +1,8 @@
-import React from "react"
-export default function Member() {
+import Layout from '../common/Layout';
+
+function Member() {
     return (
-        <section className="content member">
-            <figure></figure>
-            <div className="inner">
-                <h1>Member</h1>
-            </div>
-        </section>
-    )
+        <Layout>layout content comes here</Layout>
+    );
 }
+export default Member;
