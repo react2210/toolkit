@@ -1,0 +1,51 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  width: 100%;
+  background: #222;
+}
+header .inner {
+  width: 1180px;
+  height: 80px;
+  margin: 0 auto;
+  position: relative;
+}
+header .inner h1 {
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+}
+header .inner h1 a {
+  font: bold 24px/1 "arial";
+  color: #fff;
+}
+header .inner #gnb {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+header .inner #gnb li {
+  float: left;
+}
+header .inner #gnb li a {
+  display: inline-block;
+  padding: 20px 30px;
+  font: bold 14px/1 "arial";
+  color: #fff;
+}
+
+/*# sourceMappingURL=style.css.map */
