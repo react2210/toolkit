@@ -1,7 +1,8 @@
 import React from "react"
 export default function Member() {
     return (
-        <section>
+        <section className="content member">
+            <figure></figure>
             <div className="inner">
                 <h1>Member</h1>
             </div>
