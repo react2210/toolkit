@@ -1,10 +1,13 @@
 import Layout from "../common/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Popup from "../common/Popup";
 
 export default function Youtube() {
 
     const [Vids, setVids] = useState([]);
+    const [Open, setOpen] = useState(false);
+    const [Index, setIndex] = useState(0);
 
     useEffect(() => {
         const key = 'AIzaSyAKqZ1Dx9awi1lCS84qziASeQYZJqLxLSM';
@@ -19,30 +22,34 @@ export default function Youtube() {
     }, []);
 
     return (
-        <Layout name={"Youtube"}>
+        <>
+            <Layout name={"Youtube"}>
 
-            {Vids.map((data, index) => {
+                {Vids.map((data, index) => {
 
-                const tit = data.snippet.title;
-                const desc = data.snippet.description;
-                const date = data.snippet.publishedAt;
+                    const tit = data.snippet.title;
+                    const desc = data.snippet.description;
+                    const date = data.snippet.publishedAt;
 
-                return (
-                    <article key={index}>
-                        <h3>{tit.length > 30 ? tit.substr(0, 30) + '...' : tit}</h3>
-                        <div className="txt">
-                            <p>{desc.length > 100 ? desc.substr(0, 100) : desc}</p>
-                            <span>{date.split('T')[0]}</span>
-                        </div>
-                        <div className="pic">
-                            <img
-                                src={data.snippet.thumbnails.standard.url}
-                                alt={tit.length > 30 ? tit.substr(0, 30) + '...' : tit} />
-                        </div>
-                    </article>
-                );
-            })}
+                    return (
+                        <article key={index}>
+                            <h3>{tit.length > 30 ? tit.substr(0, 30) + '...' : tit}</h3>
+                            <div className="txt">
+                                <p>{desc.length > 100 ? desc.substr(0, 100) : desc}</p>
+                                <span>{date.split('T')[0]}</span>
+                            </div>
+                            <div className="pic" onClick={() => { setOpen(true) }}>
+                                <img
+                                    src={data.snippet.thumbnails.standard.url}
+                                    alt={data.snippet.title} />
+                            </div>
+                        </article>
+                    );
+                })}
 
-        </Layout>
+            </Layout>
+            {Open && <Popup setOpen={setOpen}></Popup>}
+        </>
+
     );
 }
