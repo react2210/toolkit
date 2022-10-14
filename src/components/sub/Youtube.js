@@ -1,9 +1,48 @@
 import Layout from "../common/Layout";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Youtube() {
+
+    const [Vids, setVids] = useState([]);
+
+    useEffect(() => {
+        const key = 'AIzaSyAKqZ1Dx9awi1lCS84qziASeQYZJqLxLSM';
+        const playlist = "PLtt429gshWMp4G-VhNTFhBzBTd7GOEz-G";
+        const num = 6;
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&key=${key}&playlistId=${playlist}&maxResults=${num}`;
+
+        axios.get(url).then((json) => {
+            //console.log(json.data);
+            setVids(json.data.items);
+        })
+    }, []);
+
     return (
         <Layout name={"Youtube"}>
-            <p>Youtube contents</p>
+
+            {Vids.map((data, index) => {
+
+                const tit = data.snippet.title;
+                const desc = data.snippet.description;
+                const date = data.snippet.publishedAt;
+
+                return (
+                    <article key={index}>
+                        <h3>{tit.length > 30 ? tit.substr(0, 30) + '...' : tit}</h3>
+                        <div className="txt">
+                            <p>{desc.length > 100 ? desc.substr(0, 100) : desc}</p>
+                            <span>{date.split('T')[0]}</span>
+                        </div>
+                        <div className="pic">
+                            <img
+                                src={data.snippet.thumbnails.standard.url}
+                                alt={tit.length > 30 ? tit.substr(0, 30) + '...' : tit} />
+                        </div>
+                    </article>
+                );
+            })}
+
         </Layout>
     );
 }
