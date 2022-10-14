@@ -38,7 +38,10 @@ export default function Youtube() {
                                 <p>{desc.length > 100 ? desc.substr(0, 100) : desc}</p>
                                 <span>{date.split('T')[0]}</span>
                             </div>
-                            <div className="pic" onClick={() => { setOpen(true) }}>
+                            <div className="pic" onClick={() => {
+                                setOpen(true)
+                                setIndex(index)
+                            }}>
                                 <img
                                     src={data.snippet.thumbnails.standard.url}
                                     alt={data.snippet.title} />
@@ -48,7 +51,9 @@ export default function Youtube() {
                 })}
 
             </Layout>
-            {Open && <Popup setOpen={setOpen}></Popup>}
+            {Open && <Popup setOpen={setOpen}>
+                <iframe src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`} frameBorder='0'></iframe>
+            </Popup>}
         </>
 
     );
