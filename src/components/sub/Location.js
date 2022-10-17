@@ -4,21 +4,50 @@ import Layout from "../common/Layout"
 export default function Location() {
 
     const { kakao } = window;
+
+    const info = [
+        {
+            title: '삼성동 코엑스',
+            latlng: new kakao.maps.LatLng(37.5116828, 127.059151),
+            imgUrl: `${process.env.PUBLIC_URL}/img/marker1.png`,
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(116, 99) }
+        },
+        {
+            title: '올림픽 공원',
+            latlng: new kakao.maps.LatLng(37.5206868, 127.1214941),
+            imgUrl: `${process.env.PUBLIC_URL}/img/marker2.png`,
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(116, 99) }
+        },
+        {
+            title: '서울 시청',
+            latlng: new kakao.maps.LatLng(37.5662952, 126.9779451),
+            imgUrl: `${process.env.PUBLIC_URL}/img/marker3.png`,
+            imgSize: new kakao.maps.Size(232, 99),
+            imgPos: { offset: new kakao.maps.Point(116, 99) }
+        },
+    ];
+
     const container = useRef(null);
     const [Location, setLocation] = useState(null);
 
     const [Traffic, setTraffic] = useState(false);
     // Traffic 토글 기능 구현을 위한 state을 추가, 불림값을 부여한다. 스위치가 가능한 불린값을 주는것
+    const [Info] = useState(info);
+    //setInfo 는 info가 바뀔 일이 없으므로 필요가 없다
+    const [Index, setIndex] = useState(0);
+    //인덱스가 변화될때 렌더링이 필요하므로 useState에 담아 관리한다
 
     const option = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: Info[Index].latlng, //기존 0에서 Index로 변경해준다
         level: 3
     };
-    const markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    const markerPosition = Info[Index].latlng;
+    const imageSrc = Info[Index].imgUrl;
+    const imageSize = Info[Index].imgSize
+    const imageOption = Info[Index].imgPos;
 
-    const imageSrc = `${process.env.PUBLIC_URL}/img/marker1.png`;
-    const imageSize = new kakao.maps.Size(232, 99);
-    const imageOption = { offset: new kakao.maps.Point(116, 99) };
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
     const marker = new kakao.maps.Marker({
@@ -34,7 +63,7 @@ export default function Location() {
 
         marker.setMap(map_instance);
         setLocation(map_instance);
-    }, []);
+    }, [Index]); //<--- 기존 컴포넌트가 처음 마운트 되었을 때만 지도를 출력하던 방식에서, Index 가 변경될때 지도가 다시 렌더링 되는 방식으로 바꿈
 
 
     //트래픽 토글전용 useEffect  => 
@@ -65,6 +94,13 @@ export default function Location() {
                 {/* Traffic의 값에 따라서 버튼의 내용도 변경 */}
                 {Traffic ? 'Traffic OFF' : 'Traffic ON'}
             </button>
+
+            <ul className="branch">
+                {/* 각 버튼을 클릭할때 마다 Index의 값을 변경 */}
+                <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
+                <li onClick={() => setIndex(1)}>올림픽 공원</li>
+                <li onClick={() => setIndex(2)}>서울 시청</li>
+            </ul>
         </Layout>
     );
 }
