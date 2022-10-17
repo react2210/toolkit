@@ -30,6 +30,7 @@ export default function Location() {
     ];
 
     const container = useRef(null);
+    const btns = useRef(null);
     const [Location, setLocation] = useState(null);
 
     const [Traffic, setTraffic] = useState(false);
@@ -63,6 +64,9 @@ export default function Location() {
 
         marker.setMap(map_instance);
         setLocation(map_instance);
+
+        for (const btn of btns.current.children) btn.classList.remove("on");
+        btns.current.children[Index].classList.add("on");
     }, [Index]); //<--- 기존 컴포넌트가 처음 마운트 되었을 때만 지도를 출력하던 방식에서, Index 가 변경될때 지도가 다시 렌더링 되는 방식으로 바꿈
 
 
@@ -86,26 +90,27 @@ export default function Location() {
         <Layout name={"Location"}>
             <div id="map" ref={container}></div>
 
-            {/* 기존의 두개의 버튼에서 한개의 토글버튼으로 바꿈
-    버튼 클릭시 트래픽값을 반전처리 => !Traffic
-*/}
-            <button onClick={() => { setTraffic(!Traffic) }
-            }>
-                {/* Traffic의 값에 따라서 버튼의 내용도 변경 */}
-                {Traffic ? 'Traffic OFF' : 'Traffic ON'}
-            </button>
+            <div className="btnSet">
+                <button onClick={() => { setTraffic(!Traffic) }
+                }>
+                    {/* Traffic의 값에 따라서 버튼의 내용도 변경 */}
+                    {Traffic ? 'Traffic OFF' : 'Traffic ON'}
+                </button>
+                <ul className="branch" ref={btns}>
+                    {
+                        Info.map((el, idx) => {
+                            return (
+                                <li key={idx} onClick={() => setIndex(idx)}>
+                                    {el.title}
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </div>
 
-            <ul className="branch">
-                {
-                    Info.map((el, idx) => {
-                        return (
-                            <li key={idx} onClick={() => setIndex(idx)}>
-                                {el.title}
-                            </li>
-                        );
-                    })
-                }
-            </ul>
+
+
         </Layout>
     );
 }
