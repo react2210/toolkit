@@ -96,10 +96,15 @@ export default function Location() {
             </button>
 
             <ul className="branch">
-                {/* 각 버튼을 클릭할때 마다 Index의 값을 변경 */}
-                <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
-                <li onClick={() => setIndex(1)}>올림픽 공원</li>
-                <li onClick={() => setIndex(2)}>서울 시청</li>
+                {
+                    Info.map((el, idx) => {
+                        return (
+                            <li key={idx} onClick={() => setIndex(idx)}>
+                                {el.title}
+                            </li>
+                        );
+                    })
+                }
             </ul>
         </Layout>
     );
