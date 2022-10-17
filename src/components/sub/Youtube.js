@@ -51,6 +51,7 @@ export default function Youtube() {
                 })}
 
             </Layout>
+
             {Open && <Popup setOpen={setOpen}>
                 <iframe src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`} frameBorder='0'></iframe>
             </Popup>}

@@ -270,6 +270,11 @@ main {
 .Location figure {
   background: lightblue;
 }
+.Location #map {
+  width: 100%;
+  height: 500px;
+  background: #000;
+}
 
 .Member figure {
   background: lightgreen;
