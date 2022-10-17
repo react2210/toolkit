@@ -30,7 +30,7 @@ export default function Location() {
     ];
 
     const container = useRef(null);
-    const btns = useRef(null);
+    //const btns = useRef(null);
     const [Location, setLocation] = useState(null);
 
     const [Traffic, setTraffic] = useState(false);
@@ -65,8 +65,8 @@ export default function Location() {
         marker.setMap(map_instance);
         setLocation(map_instance);
 
-        for (const btn of btns.current.children) btn.classList.remove("on");
-        btns.current.children[Index].classList.add("on");
+        // for (const btn of btns.current.children) btn.classList.remove("on");
+        // btns.current.children[Index].classList.add("on");
     }, [Index]); //<--- 기존 컴포넌트가 처음 마운트 되었을 때만 지도를 출력하던 방식에서, Index 가 변경될때 지도가 다시 렌더링 되는 방식으로 바꿈
 
 
@@ -96,11 +96,13 @@ export default function Location() {
                     {/* Traffic의 값에 따라서 버튼의 내용도 변경 */}
                     {Traffic ? 'Traffic OFF' : 'Traffic ON'}
                 </button>
-                <ul className="branch" ref={btns}>
+                <ul className="branch">
                     {
                         Info.map((el, idx) => {
+                            let on = '';
+                            Index === idx ? (on = "on") : (on = '');
                             return (
-                                <li key={idx} onClick={() => setIndex(idx)}>
+                                <li key={idx} onClick={() => setIndex(idx)} className={on}>
                                     {el.title}
                                 </li>
                             );
