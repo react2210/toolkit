@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Layout from "../common/Layout"
 
 export default function Location() {
@@ -15,6 +15,9 @@ export default function Location() {
     const container = useRef(null);
     //useRef를 이용해서 가상돔을 참조할 변수로 컨테이너를 생성한 뒤, null값으로 빈 구역을 만들어둠
 
+
+    const [Location, setLocation] = useState(null);
+    //useEffct에서 만들어진 지도 인스턴스를 담을 state를 생성하는것
 
     const option = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -45,6 +48,7 @@ export default function Location() {
         const map_instance = new kakao.maps.Map(container.current, option);
         //지도 인스턴스를 활용해서 마커를 생성하는 코드
         marker.setMap(map_instance);
+        setLocation(map_instance);
     }, []);
 
 
@@ -55,6 +59,16 @@ export default function Location() {
     return (
         <Layout name={"Location"}>
             <div id="map" ref={container}></div>
+
+            <button onClick={() => { Location.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC) }
+            }>
+                Traffic On
+            </button>
+
+            <button onClick={() => { Location.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC) }
+            }>
+                Traffic Off
+            </button>
         </Layout>
     );
 }
