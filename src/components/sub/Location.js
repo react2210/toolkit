@@ -59,11 +59,20 @@ export default function Location() {
 
 
     useEffect(() => {
+        container.current.innerHTML = '';
 
         const map_instance = new kakao.maps.Map(container.current, option);
 
         marker.setMap(map_instance);
         setLocation(map_instance);
+
+        const mapTypeControl = new kakao.maps.MapTypeControl();
+        map_instance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+
+        const zoomControl = new kakao.maps.ZoomControl();
+        map_instance.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
 
         for (const btn of btns.current.children) btn.classList.remove("on");
         btns.current.children[Index].classList.add("on");
