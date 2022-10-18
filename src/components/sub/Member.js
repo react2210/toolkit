@@ -11,7 +11,12 @@ function Member() {
     const [Val, setVal] = useState(initVal);
 
 
-
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        //es5에서는 객체에서 키값을 변수로 지정할 수 없었다
+        //es6에서 객체의 키값을 변수로 치환하고자 한다면 키 변수명을 []로 감싸준다
+        setVal({ ...Val, [name]: value });
+    }
 
 
     return (
@@ -31,13 +36,9 @@ function Member() {
                                         placeholder='아이디를 입력하세요'
                                         name='userid'
                                         id='userid'
-                                        //Val state에 있는 userid값을 input요소에 출력
+
                                         value={Val.userid}
-                                        onChange={(e) => {
-                                            console.log(e.target.value);
-                                            //온체인지이벤트가 발생할 때마다 기존 Val state값을 복사해서 현재 입력하고 있는 값을 추가한뒤 갱신
-                                            setVal({ ...Val, userid: e.target.value });
-                                        }}
+                                        onChange={(e) => { handleChange }}
                                     />
                                 </td>
                             </tr>
