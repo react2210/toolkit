@@ -385,6 +385,43 @@ main {
   margin-left: 10px;
 }
 
+@media screen and (max-width: 1179px) {
+  .Member > .inner table td input[type=text],
+.Member > .inner table td input[type=password],
+.Member > .inner table td select,
+.Member > .inner table td textarea {
+    width: 80%;
+  }
+  .Member > .inner table td .err {
+    display: block;
+    margin-top: 10px;
+  }
+}
+@media screen and (max-width: 539px) {
+  .Member > .inner table th {
+    display: none;
+    padding: 15px 0px;
+  }
+  .Member > .inner table th:last-child {
+    display: block;
+    width: 100%;
+  }
+  .Member > .inner table th input[type=reset],
+.Member > .inner table th input[type=submit] {
+    width: 48%;
+    margin: 0px;
+  }
+  .Member > .inner table td {
+    border-left: none;
+    padding: 15px 0px;
+  }
+  .Member > .inner table td input[type=text],
+.Member > .inner table td input[type=password],
+.Member > .inner table td select,
+.Member > .inner table td textarea {
+    width: 100%;
+  }
+}
 .Youtube article {
   border-top: 1px solid #aaa;
   padding: 20px 0px;

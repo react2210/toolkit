@@ -101,6 +101,11 @@ function Member() {
         });
         setVal({ ...Val, [name]: isChecked });
     }
+    const handleReset = () => {
+        setSubmit(false);
+        setErr({});
+        setVal(initVal);
+    }
 
     const handleSubmit = (e) => {
         //순서 6 일단 서버전송은 막아준다
@@ -116,7 +121,7 @@ function Member() {
             alert('회원가입이 완료되었습니다. 메인페이지로 이동합니다.');
             history.push('/youtube');
         }
-    })
+    }, [Err]);
 
 
     return (
@@ -258,7 +263,11 @@ function Member() {
                             {/* btn set */}
                             <tr>
                                 <th colSpan='2'>
-                                    <input type="reset" value="CANCLE" />
+                                    <input
+                                        type="reset"
+                                        value="CANCLE"
+                                        onClick={handleReset}
+                                    />
                                     <input
                                         type="submit"
                                         value="SEND"
