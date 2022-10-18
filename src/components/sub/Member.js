@@ -35,6 +35,8 @@ function Member() {
                                         value={Val.userid}
                                         onChange={(e) => {
                                             console.log(e.target.value);
+                                            //온체인지이벤트가 발생할 때마다 기존 Val state값을 복사해서 현재 입력하고 있는 값을 추가한뒤 갱신
+                                            setVal({ ...Val, userid: e.target.value });
                                         }}
                                     />
                                 </td>
