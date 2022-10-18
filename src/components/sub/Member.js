@@ -6,6 +6,7 @@ function Member() {
 
     const initVal = {
         userid: '',
+        email: '',
     };
 
     const [Val, setVal] = useState(initVal);
@@ -18,6 +19,11 @@ function Member() {
         if (value.userid.length < 5) {
             errs.userid = '아이디를 5글자 이상 입력하세요';
         }
+        //이메일 인증은 8글자 이상, @있어야한다
+        if (value.email.length < 8 || !/@/.test(Val.email)) {
+            errs.email = "이메일은 8글자 이상 @를 포함하세요";
+        }
+
         return errs;
     };
 
@@ -70,7 +76,22 @@ function Member() {
                                     <span className='err'>{Err.userid}</span>
                                 </td>
                             </tr>
-
+                            {/* email */}
+                            <tr>
+                                <th scope='row'>
+                                    <label htmlFor="email">E-MAIL</label>
+                                </th>
+                                <td>
+                                    <input type="text"
+                                        id='email'
+                                        name='email'
+                                        placeholder='이메일 주소를 입력하세요'
+                                        value={Val.email}
+                                        onChange={handleChange}
+                                    />
+                                    <span className='err'>{Err.email}</span>
+                                </td>
+                            </tr>
 
                             {/* btn set */}
                             <tr>
