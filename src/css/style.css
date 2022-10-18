@@ -365,6 +365,7 @@ main {
 }
 .Member > .inner table td input[type=text],
 .Member > .inner table td input[type=password],
+.Member > .inner table td select,
 .Member > .inner table td textarea {
   width: 40%;
   border: 1px solid #aaa;

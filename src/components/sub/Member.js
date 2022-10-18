@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Layout from '../common/Layout';
 
 function Member() {
+    const history = useHistory();
+    /*
+    useHistory는 URL주소를 변경할 때 사용하는 hook이다
+    리액트 특성상, url변경없이 내부 컴포넌트 만 변경시켜 화면을 바꿔줄 수 있다. 하지만 url을 바꿔주면 현재 어느 페이지에 있는지 사용자가 대략적으로 알 수 있다. url주소 변경없이 컴포넌트의 변경만으로도 사용자가 웹페이지를 이용할 수 있지만, 복잡한 순서와 사용자 경험을 개선하기 위해 핵심 컴포넌트들이 변경될때 url을 같이 변경시켜주면 "사용자 친화적인 페이지가" 될수 있다
 
+    uswHistory는 사용하기 위해서  리액트라우터돔을 사용해야한다
+    라우터의 버전이 5인경우가 useHistory이고
+    라우터 버전이 6인경우에는 이름이 바뀌었다.  useNavigate로 변경됨
+    */
 
     const initVal = {
         userid: '',
@@ -10,6 +19,7 @@ function Member() {
         pwd1: '',
         pwd2: '',
         comments: '',
+        edu: '',
         gender: null,
         interests: null,
     };
@@ -17,6 +27,8 @@ function Member() {
     const [Val, setVal] = useState(initVal);
 
     const [Err, setErr] = useState({});
+
+    const [Submit, setSubmit] = useState(false);
 
     const check = (value) => {
         const errs = {};
@@ -54,6 +66,9 @@ function Member() {
         if (Val.comments.length < 20) {
             errs.comments = '남기는 말을 20글자 이상 입력하세요';
         }
+        if (Val.edu === '') {
+            errs.edu = "최종학력을 선택하세요";
+        }
         return errs;
     };
 
@@ -69,6 +84,12 @@ function Member() {
         const { name } = e.target;
         const isChecked = e.target.checked;
         setVal({ ...Val, [name]: isChecked });
+    }
+
+    const handleSelect = (e) => {
+        const { name } = e.target;
+        const isSelected = e.target.value;
+        setVal({ ...Val, [name]: isSelected });
     }
 
     const handleCheck = (e) => {
@@ -90,8 +111,12 @@ function Member() {
     };
 
     useEffect(() => {
-        console.log(Err);
-    }, [Err]);
+        const len = Object.keys(Err).length;
+        if (len === 0 && Submit) {
+            alert('회원가입이 완료되었습니다. 메인페이지로 이동합니다.');
+            history.push('/youtube');
+        }
+    })
 
 
     return (
@@ -157,6 +182,22 @@ function Member() {
                                     <span className='err'>{Err.email}</span>
                                 </td>
                             </tr>
+                            {/* edu */}
+                            <tr>
+                                <th scope='row'>
+                                    <label htmlFor="edu">EDUCATION</label>
+                                </th>
+                                <td>
+                                    <select name="edu" id="edu" onChange={handleSelect}>
+                                        <option value="">학력을 선택하세요</option>
+                                        <option value="elementary">초등학교 졸업</option>
+                                        <option value="middle">중학교 졸업</option>
+                                        <option value="high">고등학교 졸업</option>
+                                        <option value="college">대학교 졸업</option>
+                                    </select>
+                                    <span className='err'>{Err.edu}</span>
+                                </td>
+                            </tr>
                             {/* gender */}
                             <tr>
                                 <th scope='row'>GENDER</th>
@@ -218,7 +259,11 @@ function Member() {
                             <tr>
                                 <th colSpan='2'>
                                     <input type="reset" value="CANCLE" />
-                                    <input type="submit" value="SEND" />
+                                    <input
+                                        type="submit"
+                                        value="SEND"
+                                        onClick={() => setSubmit(true)}
+                                    />
                                 </th>
                             </tr>
                         </tbody>
