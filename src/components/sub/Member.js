@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../common/Layout';
 
 function Member() {
@@ -37,15 +37,19 @@ function Member() {
         //순서 8 인증검사 결과 errs가 존재한다면 반환된 에러 객체를 Err state에 옮겨 담음
     };
 
+    useEffect(() => {
+        console.log(Err);
+    }, [Err]);
+
 
     return (
         <Layout name={'Member'}>
             {/* 순서 5 전송버튼 클릭시 핸들서브밋함수를 호출 */}
             <form onSubmit={handleSubmit}>
                 <fieldset>
-                    <legend>회원가입 폼 양식</legend>
+                    <legend className='h'>회원가입 폼 양식</legend>
                     <table border='1'>
-                        <caption>회원가입 정보입력</caption>
+                        <caption className='h'>회원가입 정보입력</caption>
                         <tbody>
                             {/* userid */}
                             <tr>
@@ -60,7 +64,7 @@ function Member() {
 
                                         value={Val.userid}
                                         //순서1 - 인풋에 값을 입력시 핸들체인지 함수가 호출
-                                        onChange={(e) => { handleChange }}
+                                        onChange={handleChange}
                                     />
                                     {/* 순서 9 만약 에러객체가 있다면 화면에 출력 */}
                                     <span className='err'>{Err.userid}</span>
@@ -71,8 +75,8 @@ function Member() {
                             {/* btn set */}
                             <tr>
                                 <th colSpan='2'>
-                                    <input type="reset" value="" />
-                                    <input type="submit" value="" />
+                                    <input type="reset" value="CANCLE" />
+                                    <input type="submit" value="SEND" />
                                 </th>
                             </tr>
                         </tbody>
