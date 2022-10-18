@@ -364,10 +364,12 @@ main {
   padding: 15px 30px;
 }
 .Member > .inner table td input[type=text],
-.Member > .inner table td input[type=password] {
+.Member > .inner table td input[type=password],
+.Member > .inner table td textarea {
   width: 40%;
   border: 1px solid #aaa;
   padding: 6px 10px;
+  resize: none;
 }
 .Member > .inner table td label {
   margin-right: 6px;
