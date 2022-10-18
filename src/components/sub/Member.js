@@ -7,6 +7,10 @@ function Member() {
     const initVal = {
         userid: '',
         email: '',
+        pwd1: '',
+        pwd2: '',
+        gender: null,
+        interests: null,
     };
 
     const [Val, setVal] = useState(initVal);
@@ -16,6 +20,11 @@ function Member() {
     const check = (value) => {
         const errs = {};
 
+        const eng = /[a-zA-Z]/;
+        const num = /[0-9]/;
+        const spc = /[~!@#$%^&*()_+]/;
+
+
         if (value.userid.length < 5) {
             errs.userid = '아이디를 5글자 이상 입력하세요';
         }
@@ -23,7 +32,24 @@ function Member() {
         if (value.email.length < 8 || !/@/.test(Val.email)) {
             errs.email = "이메일은 8글자 이상 @를 포함하세요";
         }
-
+        if (
+            value.pwd1 < 5 ||
+            !eng.test(value.pwd1) ||
+            !num.test(value.pwd1) ||
+            !spc.test(value.pwd1)
+            //5글자보다 작으면 참이므로 이후의 것은 판단하지 않고 밑으로 내려가서 에러메세지를 출력, 거짓이면 ||을 넘어가서 영어글자수를 물어보는것 영어글자가 없으면 참이므로 밑에 에러메세지 있으면? 거짓이므로 ||을 넘어감 이렇게 모두 거짓이어야 에러메세지가 없이 통과
+        ) {
+            errs.pwd1 = '비밀번호는 5글자이상, 영문, 숫자, 특수문자를 모두 포함하세요';
+        }
+        if (value.pwd1 !== value.pwd2 || value.pwd2 < 5) {
+            errs.pwd2 = '두개의 비밀번호를 동일하게 입력하세요';
+        }
+        if (!Val.gender) {
+            errs.gender = '성별을 선택하세요';
+        }
+        if (!Val.interests) {
+            errs.interests = "관심사를 하나이상 선택하세요";
+        }
         return errs;
     };
 
@@ -33,6 +59,22 @@ function Member() {
         //순서 3 - 비구조화 할당으로 받은 값을 Val state에 저장하고 
         //순서 4 -setVal함수가 렌더링해서 우리가 볼 수 있도록 함
         setVal({ ...Val, [name]: value });
+    };
+
+    const handleRadio = (e) => {
+        const { name } = e.target;
+        const isChecked = e.target.checked;
+        setVal({ ...Val, [name]: isChecked });
+    }
+
+    const handleCheck = (e) => {
+        let isChecked = false;
+        const { name } = e.target;
+        const inputs = e.target.parentElement.querySelectorAll('input');
+        inputs.forEach((el) => {
+            if (el.checked) isChecked = true;
+        });
+        setVal({ ...Val, [name]: isChecked });
     }
 
     const handleSubmit = (e) => {
@@ -76,6 +118,25 @@ function Member() {
                                     <span className='err'>{Err.userid}</span>
                                 </td>
                             </tr>
+                            {/* password */}
+                            <tr>
+                                <th scope='row'>
+                                    <label htmlFor="pwd1">PASSWORD</label>
+                                </th>
+                                <td>
+                                    <input type="password" name="pwd1" id="pwd1" placeholder='비밀번호를 입력하세요' onChange={handleChange} />
+                                    <span className='err'>{Err.pwd1}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope='row'>
+                                    <label htmlFor="pwd2">RE-PASSWORD</label>
+                                </th>
+                                <td>
+                                    <input type="password" name="pwd2" id="pwd2" placeholder='비밀번호를 재입력하세요' onChange={handleChange} />
+                                    <span className='err'>{Err.pwd2}</span>
+                                </td>
+                            </tr>
                             {/* email */}
                             <tr>
                                 <th scope='row'>
@@ -92,7 +153,45 @@ function Member() {
                                     <span className='err'>{Err.email}</span>
                                 </td>
                             </tr>
+                            {/* gender */}
+                            <tr>
+                                <th scope='row'>GENDER</th>
+                                <td>
+                                    <label htmlFor="male">MALE</label>
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        id="male"
+                                        onChange={handleRadio} />
 
+                                    <label htmlFor="female">FEMALE</label>
+                                    <input
+                                        type="radio"
+                                        name="gender"
+                                        id="female"
+                                        onChange={handleRadio} />
+                                    <span className='err'>{Err.gender}</span>
+                                </td>
+                            </tr>
+                            {/* check box */}
+                            <tr>
+                                <th scope='row'>INTERESTS</th>
+                                <td>
+                                    <label htmlFor="sports">SPORTS</label>
+                                    <input type="checkbox" name="interests" id="sports"
+                                        onChange={handleCheck} />
+
+                                    <label htmlFor="music">MUSIC</label>
+                                    <input type="checkbox" name="interests" id="music"
+                                        onChange={handleCheck} />
+
+                                    <label htmlFor="game">GAME</label>
+                                    <input type="checkbox" name="interests" id="game"
+                                        onChange={handleCheck} />
+                                    <span className='err'>{Err.interests}</span>
+                                </td>
+
+                            </tr>
                             {/* btn set */}
                             <tr>
                                 <th colSpan='2'>

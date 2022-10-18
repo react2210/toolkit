@@ -363,10 +363,18 @@ main {
   border-left: 1px solid #bbb;
   padding: 15px 30px;
 }
-.Member > .inner table td input[type=text] {
+.Member > .inner table td input[type=text],
+.Member > .inner table td input[type=password] {
   width: 40%;
   border: 1px solid #aaa;
   padding: 6px 10px;
+}
+.Member > .inner table td label {
+  margin-right: 6px;
+}
+.Member > .inner table td input[type=radio],
+.Member > .inner table td input[type=checkbox] {
+  margin-right: 20px;
 }
 .Member > .inner table td .err {
   font: 12px/1 "arial";
