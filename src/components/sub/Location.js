@@ -66,10 +66,11 @@ export default function Location() {
         marker.setMap(map_instance);
         setLocation(map_instance);
 
+        //맵 타입 컨트롤러
         const mapTypeControl = new kakao.maps.MapTypeControl();
         map_instance.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
-
+        //줌 단계별 컨트롤러
         const zoomControl = new kakao.maps.ZoomControl();
         map_instance.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
