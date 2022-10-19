@@ -280,6 +280,18 @@ main {
   flex-wrap: wrap;
   align-content: center;
 }
+.Community > .inner .showBox article .editTxt {
+  width: 60%;
+}
+.Community > .inner .showBox article .editTxt input[type=text],
+.Community > .inner .showBox article .editTxt textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid lightblue;
+  margin-bottom: 20px;
+  background: #eaf9f9;
+  resize: none;
+}
 .Community > .inner .showBox article .btnSet {
   display: flex;
   align-items: center;
