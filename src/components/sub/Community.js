@@ -2,20 +2,45 @@ import { useEffect, useRef, useState } from "react";
 import Layout from "../common/Layout";
 export default function Community() {
 
-    const dummyPosts = [
-        { title: 'HELLO5', content: 'Here comes description in details' },
-        { title: 'HELLO4', content: 'Here comes description in details' },
-        { title: 'HELLO3', content: 'Here comes description in details' }, //, enableUpdate : true 
-        { title: 'HELLO2', content: 'Here comes description in details' },
-        { title: 'HELLO1', content: 'Here comes description in details' },
 
-    ];
+
+    const getLocalData = () => {
+        const dummyPosts = [
+            { title: 'HELLO5', content: 'Here comes description in details' },
+            { title: 'HELLO4', content: 'Here comes description in details' },
+            { title: 'HELLO3', content: 'Here comes description in details' }, //, enableUpdate : true 
+            { title: 'HELLO2', content: 'Here comes description in details' },
+            { title: 'HELLO1', content: 'Here comes description in details' },
+
+        ];
+        const data = localStorage.getItem('post');
+
+        if (data) {
+            return JSON.parse(data);
+        } else {
+            return dummyPosts;
+        }
+
+
+    };
+    /*
+    보통 데이터들은 새로고침이나 재접속시 초기화 된다. < --- session storage 브라우저를 종료하면 날라가는 휘발성 저장공간
+
+    이러한 데이터를 기억하기 위해서는
+    1. 서버로 보내서 데이터 베이스에 저장
+    2. 브라우저가 가지고 있는 임시저장공간 즉 localstorage에 저장한다
+    브라우저를 청소하거나 직접 localstorage를 지우지 않는한 사라지지 않음 5MB정도 '텍스트'를 저장할 수 있음
+    
+    */
+
+
+
 
     const input = useRef(null);
     const textarea = useRef(null);
     const inputEdit = useRef(null);
     const textareaEdit = useRef(null);
-    const [Posts, setPosts] = useState(dummyPosts);
+    const [Posts, setPosts] = useState(getLocalData);
     const [Allowed, setAllowed] = useState(true);
 
     const resetForm = () => {
@@ -40,11 +65,12 @@ export default function Community() {
         }
 
         setPosts([
-            ...Posts,
+
             {
                 title: input.current.value,
                 content: textarea.current.value
             },
+            ...Posts,
         ]);
         resetForm();
     };
@@ -116,6 +142,11 @@ export default function Community() {
     useEffect(() => {
         console.log(Posts);
 
+        /*
+        데이터를 스토리지에 저장하기 : setItem('key','value');
+        JSON.stringify(Posts) 메소드로 문자화 시켜서 저장해야 한다
+        */
+        localStorage.setItem('post', JSON.stringify(Posts));
 
     }, [Posts]);
 

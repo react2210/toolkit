@@ -309,6 +309,31 @@ main {
   color: orangered;
 }
 
+@media screen and (max-width: 1179px) {
+  .Community > .inner .inputBox input[type=text],
+.Community > .inner .inputBox textarea {
+    width: 100%;
+  }
+  .Community > .inner .inputBox .btnSet {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .Community > .inner .inputBox .btnSet button {
+    width: 47%;
+    margin-right: 0px;
+  }
+  .Community > .inner .showBox article .editTxt,
+.Community > .inner .showBox article .txt {
+    width: 100%;
+  }
+  .Community > .inner .showBox article .btnSet {
+    margin-top: 20px;
+  }
+  .Community > .inner .showBox article .btnSet button {
+    margin-left: 0px;
+  }
+}
 .Department > .inner::after {
   content: "";
   display: block;
