@@ -4,12 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 export default function Header(props) {
     const active = { color: 'orange' };
+
+    let url = '';
+    props.type === 'main'
+        ? (url = process.env.PUBLIC_URL + '/img/logo_w.png')
+        : (url = process.env.PUBLIC_URL + '/img/logo_b.png');
+
+
     return (
         <header className={props.type}>
             <div className="inner">
                 <h1>
                     <Link to='/'>
-                        LOGO
+                        <img src={url} alt="logo" />
                     </Link>
                 </h1>
                 <ul id="gnb">

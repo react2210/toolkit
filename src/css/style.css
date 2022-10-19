@@ -117,12 +117,15 @@ header .inner {
 }
 header .inner h1 {
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
   left: 0px;
 }
 header .inner h1 a {
   font: bold 24px/1 "arial";
   color: #fff;
+}
+header .inner h1 img {
+  height: 30px;
 }
 header .inner #gnb {
   position: absolute;
@@ -146,6 +149,7 @@ header .inner .fa-bars {
   display: none;
 }
 header.sub {
+  border-bottom: 1px solid #999;
   background: #fff;
 }
 header.sub .inner h1 a {
@@ -158,17 +162,17 @@ header.sub .inner .fa-bars {
   color: #333;
 }
 header.main {
-  background: #fff;
+  background: #000;
   border-bottom: 1px solid #ccc;
 }
 header.main .inner h1 a {
-  color: #555;
+  color: #fff;
 }
 header.main .inner #gnb li a {
-  color: #555;
+  color: #fff;
 }
 header.main .inner .fa-bars {
-  color: #ddd;
+  color: #fff;
 }
 
 @media screen and (max-width: 1179px) {
