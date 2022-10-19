@@ -21,8 +21,11 @@ export default function Community() {
     const resetForm = () => {
         input.current.value = '';
         textarea.current.value = '';
-        inputEdit.current.value = '';
-        textareaEdit.current.value = '';
+        //초기화 함수에서 해당모드 즉 해당 값을 참조했을 때만 초기화 되도록
+        if (inputEdit.current) {
+            inputEdit.current.value = '';
+            textareaEdit.current.value = '';
+        }
     }
 
 
@@ -137,6 +140,7 @@ export default function Community() {
 
                             {
                                 post.enableUpdate ? (
+                                    //반복도는 post에서 enableUpdate=true값이 있으면 수정모드로 랜더링
                                     <>
                                         <div className="editTxt">
                                             <input type="text" defaultValue={post.title} ref={inputEdit} />
@@ -151,6 +155,7 @@ export default function Community() {
                                         </div>
                                     </>
                                 ) : (
+                                    //반복도는 post에서 enableUpdate=false거나 없으면 일반 출력모드로 랜더링
                                     <>
                                         <div className="txt">
                                             <h2>{post.title}</h2>
