@@ -12,6 +12,7 @@ function Main() {
     const pos = useRef([]);
     let secs = null;
     const [Index, setIndex] = useState(0);
+    const [Scrolled, setScrolled] = useState(0);
 
     const getPos = () => {
         pos.current = [];
@@ -25,6 +26,7 @@ function Main() {
         const scroll = window.scrollY;
         const btns = main.current.querySelectorAll('.scroll_navi li');
 
+        setScrolled(scroll);
         pos.current.map((pos, idx) => {
             //현재 스크롤한 값과 pos의 값을 비교해서
             if (scroll >= pos + base) {
@@ -65,7 +67,7 @@ function Main() {
             <Header type={'main'} />
             <Visual />
             <News />
-            <Pics />
+            <Pics Scrolled={Scrolled} />
             <Vids />
             <Btns setIndex={setIndex} />
         </main>
