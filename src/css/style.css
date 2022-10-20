@@ -162,8 +162,12 @@ header.sub .inner .fa-bars {
   color: #333;
 }
 header.main {
-  background: #000;
+  background: transparent;
   border-bottom: 1px solid #ccc;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
 }
 header.main .inner h1 a {
   color: #fff;

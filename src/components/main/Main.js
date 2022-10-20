@@ -22,7 +22,8 @@ function Main() {
     }
 
     const activation = () => {
-        const base = -window.innerHeight / 2;
+        // const base = -window.innerHeight / 2;
+        const base = 0;
         const scroll = window.scrollY;
         const btns = main.current.querySelectorAll('.scroll_navi li');
 
@@ -67,7 +68,7 @@ function Main() {
             <Header type={'main'} />
             <Visual />
             <News />
-            <Pics Scrolled={Scrolled} />
+            <Pics Scrolled={Scrolled} start={pos.current[2]} />
             <Vids />
             <Btns setIndex={setIndex} />
         </main>
