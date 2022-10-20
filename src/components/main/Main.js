@@ -1,15 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../common/Header";
 import News from "./News";
 import Pics from "./Pics";
 import Vids from "./Vids";
 import Visual from "./Visual";
 import Btns from "./Btns";
-
+import Anime from "../../asset/Anime";
 
 function Main() {
     const main = useRef(null);
     const pos = useRef([]);
+
+    const [Index, setIndex] = useState(0);
 
     const getPos = () => {
         pos.current = [];
@@ -18,13 +20,40 @@ function Main() {
         console.log(pos.current);
     }
 
+    const activation = () => {
+        const scroll = window.scrollY;
+        const btns = main.current.querySelectorAll('.scroll_navi li');
+
+        pos.current.map((pos, idx) => {
+            //현재 스크롤한 값과 pos의 값을 비교해서
+            if (scroll >= pos) {
+                for (const btn of btns) btn.classList.remove('on');
+                btns[idx].classList.add('on');
+            }
+            //버튼을 활성화~
+            //일단 모두 비활성화
+            //특정 버튼을 활성
+        });
+    };
+
     useEffect(() => {
         getPos();
         //리사이즈 이벤트가 발생하면 스크롤 값을 다시 불러온다
         window.addEventListener('resize', getPos);
-
-        return () => window.removeEventListener("resize", getPos);
+        window.addEventListener("scroll", activation);
+        return () => {
+            window.removeEventListener("resize", getPos);
+            window.removeEventListener("scroll", activation);
+        }
     }, []);
+
+    useEffect(() => {
+        new Anime(window, {
+            prop: 'scroll',
+            value: pos.current[Index],
+            duration: 500,
+        });
+    }, [Index]);
 
 
     return (
@@ -34,7 +63,7 @@ function Main() {
             <News />
             <Pics />
             <Vids />
-            <Btns />
+            <Btns setIndex={setIndex} />
         </main>
     );
 }
