@@ -11,7 +11,16 @@ function Pics({ Scrolled, start }) {
                 style={{
                     left: 100 + position,
                 }}
+            // style={
+            //     position >= 0
+            //         ? { left: 100 + position, }
+            //         : null
             >FLICKR</p>
+            <h3
+                style={{
+                    left: 100 + position / 2,
+                }}
+            >FLICKR</h3>
         </main>
     );
 }

@@ -22,8 +22,8 @@ function Main() {
     }
 
     const activation = () => {
-        // const base = -window.innerHeight / 2;
-        const base = 0;
+        const base = -window.innerHeight / 2;
+        //const base = 0;
         const scroll = window.scrollY;
         const btns = main.current.querySelectorAll('.scroll_navi li');
 
