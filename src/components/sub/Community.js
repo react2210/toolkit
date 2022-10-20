@@ -5,23 +5,8 @@ export default function Community() {
 
 
     const getLocalData = () => {
-        const dummyPosts = [
-            { title: 'HELLO5', content: 'Here comes description in details' },
-            { title: 'HELLO4', content: 'Here comes description in details' },
-            { title: 'HELLO3', content: 'Here comes description in details' }, //, enableUpdate : true 
-            { title: 'HELLO2', content: 'Here comes description in details' },
-            { title: 'HELLO1', content: 'Here comes description in details' },
-
-        ];
         const data = localStorage.getItem('post');
-
-        if (data) {
-            return JSON.parse(data);
-        } else {
-            return dummyPosts;
-        }
-
-
+        return JSON.parse(data);
     };
     /*
     보통 데이터들은 새로고침이나 재접속시 초기화 된다. < --- session storage 브라우저를 종료하면 날라가는 휘발성 저장공간
