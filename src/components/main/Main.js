@@ -10,25 +10,29 @@ import Anime from "../../asset/Anime";
 function Main() {
     const main = useRef(null);
     const pos = useRef([]);
-
+    let secs = null;
     const [Index, setIndex] = useState(0);
 
     const getPos = () => {
         pos.current = [];
-        const secs = main.current.querySelectorAll('.myScroll');
+        secs = main.current.querySelectorAll('.myScroll');
         for (const sec of secs) pos.current.push(sec.offsetTop);
         console.log(pos.current);
     }
 
     const activation = () => {
+        const base = -window.innerHeight / 2;
         const scroll = window.scrollY;
         const btns = main.current.querySelectorAll('.scroll_navi li');
 
         pos.current.map((pos, idx) => {
             //현재 스크롤한 값과 pos의 값을 비교해서
-            if (scroll >= pos) {
+            if (scroll >= pos + base) {
                 for (const btn of btns) btn.classList.remove('on');
+                for (const sec of secs) sec.classList.remove('on');
                 btns[idx].classList.add('on');
+                secs[idx].classList.add('on');
+
             }
             //버튼을 활성화~
             //일단 모두 비활성화
