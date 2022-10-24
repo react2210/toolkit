@@ -5,44 +5,94 @@ import Masonry from 'react-masonry-component';
 
 
 export default function Gallery() {
-    const key = '4612601b324a2fe5a1f5f7402bf8d87a';
-    const method_interest = "flickr.interestingness.getList";
-    const method_search = "flickr.photos.search";
-    const num = 20;
-    const interest_url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
-    const search_url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${'바다'}`;
-    const masonryOptions = { transitionDuration: '0.5s' };
 
+    const masonryOptions = { transitionDuration: '0.5s' };
     const [Items, setItems] = useState([]);
+    const [Loading, setLoading] = useState(true);
+    const [EnableClick, setEnableClick] = useState(true);
     const frame = useRef(null);
-    const getFlickr = async (url) => {
+    /*
+    interest 방식 호출
+    getFlickr({
+        type: 'interest',
+    })
+
+    search 방식 버튼
+    getFlickr({
+        type:'search',
+        tags: '검색키워드',
+    })
+    */
+    const getFlickr = async (opt) => {
+        const key = '4612601b324a2fe5a1f5f7402bf8d87a';
+        const method_interest = "flickr.interestingness.getList";
+        const method_search = "flickr.photos.search";
+        const num = 500;
+        let url = '';
+
+        if (opt.type === 'interest') {
+            url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
+        }
+        if (opt.type === 'search') {
+            url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${opt.tags}`;
+        }
+
+
+        // await axios.get(url).then((json) => {
+        //     setItems(json.data.photos.photo);
+        // })
         const result = await axios.get(url);
         setItems(result.data.photos.photo);
-        frame.current.classList.add('on');
+
+        //셋타임아웃으로 비동기화 시키고 1초 딜레이를 준뒤 로딩바를 안보이게 false로 바꾼뒤에 on을 프레임에 붙여서 보이게한다
+        setTimeout(() => {
+            setLoading(false);
+            frame.current.classList.add('on');
+
+            setTimeout(() => {
+                setEnableClick(true);
+            }, 1000);//프레임에 on붙이고 위로 올라오는 모션기간동안 0.5초 홀딩
+
+        }, 2000); //이미지 호출이 완료되고 masonry모션 적용시간까지 홀딩하는 1초
+
+
+
     };
 
-    useEffect(() => getFlickr(interest_url), []);
+    useEffect(() => getFlickr({ type: 'interest' }), []);
     //함수의 정의 형태로 콜백함수가 들어와야 한다, 함수를 단순 호출하는 형태는 읽어들일 수 없다
-    useEffect(() => {
-        getFlickr(interest_url);
-    }, [Items])
+
 
     //
 
     return (
         <Layout name={'Gallery'}>
+            {Loading && (
+                <img
+                    className="loading"
+                    src={`${process.env.PUBLIC_URL}/img/6.gif`}
+                />
+            )}
             <button
                 onClick={() => {
+                    if (!EnableClick) return;
+                    //모션중이면 false일테니 return으로 방지
+                    setEnableClick(false);
+                    //true로 들어와서 다시 false로 바꾸어 재이벤트 방지
+                    setLoading(true);
                     frame.current.classList.remove('on');
-                    getFlickr(interest_url);
+                    getFlickr({ type: 'interest' });
                 }}
             >
                 Interest Gallery
             </button>
             <button
                 onClick={() => {
+                    if (!EnableClick) return;
+                    setEnableClick(false);
+                    setLoading(true);
                     frame.current.classList.remove('on');
-                    getFlickr(search_url);
+                    getFlickr({ type: 'search', tags: "landscape" });
                 }}
             >
                 Search Gallery
