@@ -1,0 +1,33 @@
+.Gallery {
+	.frame {
+		&::after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		article {
+			width: 25%;
+			padding: 10px;
+			float: left;
+			//masonry라는 컴포넌트를 이용할 예정이라 float을 쓴다
+			.inner {
+				width: 100%;
+				padding: 10px;
+				background: #fff;
+				box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.03);
+				.pic {
+					width: 100%;
+					margin-bottom: 5px;
+					img {
+						width: 100%;
+					}
+				}
+				h2 {
+					font: normal 14px/1.2 'arial';
+					color: #777;
+					margin-bottom: 30px;
+				}
+			}
+		}
+	}
+}

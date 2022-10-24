@@ -25,10 +25,26 @@ export default function Gallery() {
         console.log(Items)
     }, [Items])
 
+    //
 
     return (
         <Layout name={'Gallery'}>
-            <p>Gallery contents</p>
+            <div className="frame">
+                {Items.map((item, idx) => {
+                    return (
+                        <article key={idx}>
+                            <div className="inner">
+                                <div className="pic">
+                                    <img
+                                        src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+                                        alt={item.title} />
+                                </div>
+                                <h2>{item.title}</h2>
+                            </div>
+                        </article>
+                    )
+                })}
+            </div>
         </Layout>
     );
 }
