@@ -1,49 +1,71 @@
 import Layout from "../common/Layout";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Masonry from 'react-masonry-component';
+
+
 export default function Gallery() {
     const key = '4612601b324a2fe5a1f5f7402bf8d87a';
     const method_interest = "flickr.interestingness.getList";
     const method_search = "flickr.photos.search";
     const num = 20;
-    const url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
+    const interest_url = `https://www.flickr.com/services/rest/?method=${method_interest}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1`;
+    const search_url = `https://www.flickr.com/services/rest/?method=${method_search}&per_page=${num}&api_key=${key}&format=json&nojsoncallback=1&tags=${'바다'}`;
+    const masonryOptions = { transitionDuration: '0.5s' };
+
     const [Items, setItems] = useState([]);
-
-    //처음 마운트가 될때 정보를 요청해서 불러와야한다
-    // useEffect(() => {
-    //     axios.get(url).then((json) => {
-    //         console.log(json.data.photos.photo);
-    //     })
-    // }, []);
-    useEffect(async () => {
+    const frame = useRef(null);
+    const getFlickr = async (url) => {
         const result = await axios.get(url);
-        // console.log(result.data.photos.photo);
         setItems(result.data.photos.photo);
-    }, []);
+        frame.current.classList.add('on');
+    };
 
+    useEffect(() => getFlickr(interest_url), []);
+    //함수의 정의 형태로 콜백함수가 들어와야 한다, 함수를 단순 호출하는 형태는 읽어들일 수 없다
     useEffect(() => {
-        console.log(Items)
+        getFlickr(interest_url);
     }, [Items])
 
     //
 
     return (
         <Layout name={'Gallery'}>
-            <div className="frame">
-                {Items.map((item, idx) => {
-                    return (
-                        <article key={idx}>
-                            <div className="inner">
-                                <div className="pic">
-                                    <img
-                                        src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
-                                        alt={item.title} />
+            <button
+                onClick={() => {
+                    frame.current.classList.remove('on');
+                    getFlickr(interest_url);
+                }}
+            >
+                Interest Gallery
+            </button>
+            <button
+                onClick={() => {
+                    frame.current.classList.remove('on');
+                    getFlickr(search_url);
+                }}
+            >
+                Search Gallery
+            </button>
+            <div className="frame" ref={frame}>
+                <Masonry elementType={'div'} options={masonryOptions}>
+
+
+                    {Items.map((item, idx) => {
+                        return (
+                            <article key={idx}>
+                                <div className="inner">
+                                    <div className="pic">
+                                        <img
+                                            src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+                                            alt={item.title} />
+                                    </div>
+                                    <h2>{item.title}</h2>
                                 </div>
-                                <h2>{item.title}</h2>
-                            </div>
-                        </article>
-                    )
-                })}
+                            </article>
+                        )
+                    })}
+                </Masonry>
             </div>
         </Layout>
     );
