@@ -11,6 +11,7 @@ export default function Gallery() {
     const [Loading, setLoading] = useState(true);
     const [EnableClick, setEnableClick] = useState(true);
     const frame = useRef(null);
+    const input = useRef(null);
     /*
     interest 방식 호출
     getFlickr({
@@ -73,30 +74,50 @@ export default function Gallery() {
                     src={`${process.env.PUBLIC_URL}/img/6.gif`}
                 />
             )}
-            <button
-                onClick={() => {
-                    if (!EnableClick) return;
-                    //모션중이면 false일테니 return으로 방지
-                    setEnableClick(false);
-                    //true로 들어와서 다시 false로 바꾸어 재이벤트 방지
-                    setLoading(true);
-                    frame.current.classList.remove('on');
-                    getFlickr({ type: 'interest' });
-                }}
-            >
-                Interest Gallery
-            </button>
-            <button
-                onClick={() => {
-                    if (!EnableClick) return;
-                    setEnableClick(false);
-                    setLoading(true);
-                    frame.current.classList.remove('on');
-                    getFlickr({ type: 'search', tags: "landscape" });
-                }}
-            >
-                Search Gallery
-            </button>
+
+            <div className="controls">
+                <nav>
+                    <button
+                        onClick={() => {
+                            if (!EnableClick) return;
+                            //모션중이면 false일테니 return으로 방지
+                            setEnableClick(false);
+                            //true로 들어와서 다시 false로 바꾸어 재이벤트 방지
+                            setLoading(true);
+                            frame.current.classList.remove('on');
+                            getFlickr({ type: 'interest' });
+                        }}
+                    >
+                        Interest Gallery
+                    </button>
+                    <button
+                        onClick={() => {
+                            if (!EnableClick) return;
+                            setEnableClick(false);
+                            setLoading(true);
+                            frame.current.classList.remove('on');
+                            getFlickr({ type: 'search', tags: "landscape" });
+                        }}
+                    >
+                        Search Gallery
+                    </button>
+                </nav>
+                <div className="searchBox">
+                    <input type="text" ref={input} placeholder='검색어를 입력하세요' />
+                    <button
+                        onClick={() => {
+                            const result = input.current.value;
+                            input.current.value = '';
+                            if (!EnableClick) return;
+                            setEnableClick(false);
+                            setLoading(true);
+                            frame.current.classList.remove('on');
+                            getFlickr({ type: 'search', tags: result, });
+                        }}
+                    >Search</button>
+                </div>
+            </div>
+
             <div className="frame" ref={frame}>
                 <Masonry elementType={'div'} options={masonryOptions}>
 
