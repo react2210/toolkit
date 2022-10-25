@@ -62,9 +62,16 @@ export default function Gallery() {
 
     useEffect(() => getFlickr({ type: 'interest' }), []);
     //함수의 정의 형태로 콜백함수가 들어와야 한다, 함수를 단순 호출하는 형태는 읽어들일 수 없다
+    const showSearch = () => {
+        const result = input.current.value;
+        input.current.value = '';
+        if (!EnableClick) return;
+        setEnableClick(false);
+        setLoading(true);
+        frame.current.classList.remove('on');
+        getFlickr({ type: 'search', tags: result, });
+    };
 
-
-    //
 
     return (
         <Layout name={'Gallery'}>
@@ -103,17 +110,12 @@ export default function Gallery() {
                     </button>
                 </nav>
                 <div className="searchBox">
-                    <input type="text" ref={input} placeholder='검색어를 입력하세요' />
+                    <input type="text" ref={input} placeholder='검색어를 입력하세요'
+                        onKeyUp={(e) => {
+                            if (e.key === 'Enter') showSearch();
+                        }} />
                     <button
-                        onClick={() => {
-                            const result = input.current.value;
-                            input.current.value = '';
-                            if (!EnableClick) return;
-                            setEnableClick(false);
-                            setLoading(true);
-                            frame.current.classList.remove('on');
-                            getFlickr({ type: 'search', tags: result, });
-                        }}
+                        onClick={showSearch}
                     >Search</button>
                 </div>
             </div>
