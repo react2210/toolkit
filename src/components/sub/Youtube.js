@@ -1,12 +1,11 @@
 import Layout from "../common/Layout";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Popup from "../common/Popup";
 
 export default function Youtube() {
-
+    const pop = useRef(null);
     const [Vids, setVids] = useState([]);
-    const [Open, setOpen] = useState(false);
     const [Index, setIndex] = useState(0);
 
     useEffect(() => {
@@ -39,7 +38,7 @@ export default function Youtube() {
                                 <span>{date.split('T')[0]}</span>
                             </div>
                             <div className="pic" onClick={() => {
-                                setOpen(true)
+                                pop.current.open();
                                 setIndex(index)
                             }}>
                                 <img
@@ -51,11 +50,12 @@ export default function Youtube() {
                 })}
 
             </Layout>
-
-            {Open && <Popup setOpen={setOpen}>
-                <iframe src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`} frameBorder='0'></iframe>
-            </Popup>}
+            <Popup ref={pop}>
+                {Vids.length !== 0 && (
+                    <iframe src={`https://www.youtube.com/embed/${Vids[Index].snippet.resourceId.videoId}`} frameBorder='0'></iframe>
+                )}
+            </Popup>
         </>
 
     );
-}
+}  

@@ -38,7 +38,6 @@ export default Popup;
 /*
 forwardRef 
 단계1 - 기존의 컴포넌트 함수를 popup이라는 컴포넌트 함수를 대입형(선언형을 대입형으로 전환해줘야한다)
-
 단계2 - 해당 화살표함수를 forwordRef로 감쌈, 인수로 전달한다
 단계 3 - 화살표함수(forwardRef로 전달되는) 두번째 인수로 ref추가
 단계 4 - forwardRef안쪽에 useImperativeHandle 함수를 호출한다
