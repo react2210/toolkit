@@ -28,7 +28,7 @@ export default function Gallery() {
         const key = '4612601b324a2fe5a1f5f7402bf8d87a';
         const method_interest = "flickr.interestingness.getList";
         const method_search = "flickr.photos.search";
-        const num = 20;
+        const num = 100;
         let url = '';
 
         if (opt.type === 'interest') {
@@ -44,6 +44,7 @@ export default function Gallery() {
         // })
         const result = await axios.get(url);
         if (result.data.photos.photo.length === 0) return alert('해당 검색어의 결과 이미지가 없습니다');
+        //   console.log(result.data.photos.photo);
         setItems(result.data.photos.photo);
 
         //셋타임아웃으로 비동기화 시키고 1초 딜레이를 준뒤 로딩바를 안보이게 false로 바꾼뒤에 on을 프레임에 붙여서 보이게한다
@@ -138,6 +139,18 @@ export default function Gallery() {
                                             alt={item.title} />
                                     </div>
                                     <h2>{item.title}</h2>
+
+                                    <div className="profile">
+                                        <img src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`} alt={item.owner}
+                                            onError={(e) => {
+                                                e.target.setAttribute(
+                                                    'src',
+                                                    'https://www.flickr.com/images/buddyicon.gif'
+                                                );
+                                            }}
+                                        />
+                                        <span>{item.owner}</span>
+                                    </div>
                                 </div>
                             </article>
                         )
