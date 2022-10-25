@@ -28,7 +28,7 @@ export default function Gallery() {
         const key = '4612601b324a2fe5a1f5f7402bf8d87a';
         const method_interest = "flickr.interestingness.getList";
         const method_search = "flickr.photos.search";
-        const num = 500;
+        const num = 20;
         let url = '';
 
         if (opt.type === 'interest') {
@@ -43,6 +43,7 @@ export default function Gallery() {
         //     setItems(json.data.photos.photo);
         // })
         const result = await axios.get(url);
+        if (result.data.photos.photo.length === 0) return alert('해당 검색어의 결과 이미지가 없습니다');
         setItems(result.data.photos.photo);
 
         //셋타임아웃으로 비동기화 시키고 1초 딜레이를 준뒤 로딩바를 안보이게 false로 바꾼뒤에 on을 프레임에 붙여서 보이게한다
@@ -63,8 +64,11 @@ export default function Gallery() {
     useEffect(() => getFlickr({ type: 'interest' }), []);
     //함수의 정의 형태로 콜백함수가 들어와야 한다, 함수를 단순 호출하는 형태는 읽어들일 수 없다
     const showSearch = () => {
-        const result = input.current.value;
+        const result = input.current.value.trim();
         input.current.value = '';
+
+        if (!result) return alert('검색어를 입력하세요');
+
         if (!EnableClick) return;
         setEnableClick(false);
         setLoading(true);
