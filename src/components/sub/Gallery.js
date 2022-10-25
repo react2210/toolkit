@@ -58,15 +58,15 @@ export default function Gallery() {
 
             setTimeout(() => {
                 setEnableClick(true);
-            }, 1000);//프레임에 on붙이고 위로 올라오는 모션기간동안 0.5초 홀딩
+            }, 500);//프레임에 on붙이고 위로 올라오는 모션기간동안 0.5초 홀딩
 
-        }, 2000); //이미지 호출이 완료되고 masonry모션 적용시간까지 홀딩하는 1초
+        }, 1000); //이미지 호출이 완료되고 masonry모션 적용시간까지 홀딩하는 1초
 
 
 
     };
 
-    useEffect(() => getFlickr({ type: 'interest' }), []);
+    useEffect(() => getFlickr({ type: 'user', user: '164021883@N04' }), []);
     //함수의 정의 형태로 콜백함수가 들어와야 한다, 함수를 단순 호출하는 형태는 읽어들일 수 없다
     const showSearch = () => {
         const result = input.current.value.trim();
@@ -112,10 +112,10 @@ export default function Gallery() {
                             setEnableClick(false);
                             setLoading(true);
                             frame.current.classList.remove('on');
-                            getFlickr({ type: 'search', tags: "landscape" });
+                            getFlickr({ type: 'user', user: '164021883@N04' });
                         }}
                     >
-                        Search Gallery
+                        My Gallery
                     </button>
                 </nav>
                 <div className="searchBox">
