@@ -12,6 +12,34 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+  <div class="defaults"></div>
+  <div class="mask"></div>
+
+  <script>
+    const defaults = document.querySelector('.defaults');
+    const mask = document.querySelector('.mask');
+    let tags = '';
+    const baseURL = 'https://dcodelabTutor.github.io/react_9class/img/';
+    const imgs = [
+      baseURL + 'Community.jpg',
+      baseURL + 'Department.jpg',
+      baseURL + 'Gallery.jpg',
+      baseURL + 'Location.jpg',
+      baseURL + 'Youtube.jpg',
+      baseURL + 'Member.jpg',
+    ];
+    const vids = [
+      baseURL + 'vid2.mp4'
+    ];
+
+    function createDOM() {
+      imgs.forEach(src => tags += `<img src=${src} />`);
+      vids.forEach(src => tags += `<video src=${src}></video>`);
+      defaults.innerHTML = tags;
+    }
+  </script>
+
+
   <!-- 
     SSR vs CSR
     - SSR (Server Side Rendering) : 페이지 이동시 일일이 HTML파일을 서버로부터 불러오는 방식
