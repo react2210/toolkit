@@ -40,6 +40,14 @@
   </style>
 
   <script>
+    /*
+    이미지, 영상소스를 미리 SSR방식으로 캐싱처리하는 작업흐름
+    1. 배열에 캐싱할 이미지와 영상소스의 URL을 미리 담아놓음
+    2. 동적으로 배열에 있는 정보값으로 실제 img, video 돔을 index.html안쪽에 강제 생성
+    3. DOM이 index.html에 생성되는 동안 마스크화면을 대신 보여줌
+    4. 모든 영상, 이미지 소스가 캐싱완료되면 마스크를 강제 제거하고 동적으로 생성한 요소도 제거
+    5. 그 사이 리액트 컴포넌트들이 리얼돔으로 변환되서 화면에 출력
+    */
     const defaults = document.querySelector('.defaults');
     const mask = document.querySelector('.mask');
     let tags = '';
@@ -62,6 +70,37 @@
       defaults.innerHTML = tags;
     }
 
+    //이미지소스 로딩완료체크 함수
+    function loadImg() {
+      return new Promise((res, rej) => {
+        let countImg = 0;
+        const imgDOM = defaults.querySelectorAll('img');
+
+        imgDOM.forEach(img => {
+          img.onload = () => {
+            countImg++;
+            console.log('img loaded', countImg);
+            if (countImg === imgs.length) res(true);
+          }
+        })
+      })
+    }
+
+    //영상소스 로딩완료체크 함수
+    function loadVid() {
+      return new Promise((res, rej) => {
+        let countVid = 0;
+        const vidDOM = defaults.querySelectorAll('video');
+
+        vidDOM.forEach(vid => {
+          vid.onloadeddata = () => {
+            countVid++;
+            console.log('vid loaded', countVid);
+            if (countVid === vids.length) res(true);
+          }
+        })
+      })
+    }
     createDOM();
   </script>
 
