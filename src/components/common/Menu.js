@@ -4,7 +4,7 @@ import { Link, NavLink } from 'react-router-dom';
 
 //Menu컴포넌트를 화살표함수로 변경해서 forwardRef메서드의 인수로 전달
 const Menu = forwardRef((props, ref) => {
-	const [Open, setOpen] = useState(true);
+	const [Open, setOpen] = useState(false);
 	const active = { color: 'orange' };
 
 	//부모컴포넌트의 참조객체에 담길 객체를 리턴 (해당 객체안에는 함수를 담아서 전달)

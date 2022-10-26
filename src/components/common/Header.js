@@ -56,7 +56,7 @@ export default function Header(props) {
                         </NavLink>
                     </li>
                 </ul>
-                <FontAwesomeIcon icon={faBars} />
+                <FontAwesomeIcon icon={faBars} onClick={() => menu.current.toggle()} />
             </div>
 
             {/*menu.current에 담기는 값은 자식컴포넌트에서 useImperativeHandle이 내보내주고 있는 toggle함수*/}
