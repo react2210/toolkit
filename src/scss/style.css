@@ -275,6 +275,7 @@ header.main .inner .fa-bars {
   left: 0;
   background: #111;
   padding: 50px;
+  z-index: 10;
 }
 
 #mobileMenu h1 {
