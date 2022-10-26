@@ -2,14 +2,22 @@ import { useState, forwardRef, useImperativeHandle } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link, NavLink } from 'react-router-dom';
 
-function Menu() {
+//Menu컴포넌트를 화살표함수로 변경해서 forwardRef메서드의 인수로 전달
+const Menu = forwardRef((props, ref) => {
 	const [Open, setOpen] = useState(true);
 	const active = { color: 'orange' };
+
+	//부모컴포넌트의 참조객체에 담길 객체를 리턴 (해당 객체안에는 함수를 담아서 전달)
+	useImperativeHandle(ref, () => {
+		return {
+			toggle: () => setOpen(!Open)
+		}
+	})
 
 	return (
 		<AnimatePresence>
 			{Open && (
-				<nav>
+				<nav id='mobileMenu'>
 					<h1>
 						<Link to='/'>
 							<img src={process.env.PUBLIC_URL + '/img/logo_w.png'} alt="logo" />
@@ -55,6 +63,6 @@ function Menu() {
 		</AnimatePresence>
 
 	);
-}
+})
 
 export default Menu;

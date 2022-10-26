@@ -1,9 +1,11 @@
-import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useRef } from 'react';
 import Menu from './Menu';
+
 export default function Header(props) {
+    const menu = useRef(null);
     const active = { color: 'orange' };
 
     let url = '';
@@ -57,7 +59,8 @@ export default function Header(props) {
                 <FontAwesomeIcon icon={faBars} />
             </div>
 
-            <Menu />
+            {/*menu.current에 담기는 값은 자식컴포넌트에서 useImperativeHandle이 내보내주고 있는 toggle함수*/}
+            <Menu ref={menu} />
         </header>
     )
 }
