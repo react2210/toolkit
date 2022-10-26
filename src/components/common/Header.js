@@ -56,6 +56,7 @@ export default function Header(props) {
                         </NavLink>
                     </li>
                 </ul>
+                {/* 토글 버튼 클릭시 참조된 토글함수 호출 */}
                 <FontAwesomeIcon icon={faBars} onClick={() => menu.current.toggle()} />
             </div>
 
