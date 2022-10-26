@@ -3,11 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Link, NavLink } from 'react-router-dom';
 
 function Menu() {
+    const active = { color: 'orange' };
+
     return (
         <nav>
             <h1>
                 <Link to='/'>
-                    <img src={url} alt="logo" />
+                    <img src={process.env.PUBLIC_URL + '/img/logo_w.png'} alt="logo" />
                 </Link>
             </h1>
 
