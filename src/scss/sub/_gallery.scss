@@ -97,6 +97,7 @@
 						cursor: pointer;
 						transition: 0.5s;
 						font-size: 20px;
+						word-break: break-all;
 
 						&:hover {
 							color: aqua;
