@@ -1,5 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 import { fetchYoutube } from './redux/youtubeSlice';
+import { fetchMembers } from './redux/memberSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -24,6 +25,7 @@ function App() {
 
 	useEffect(() => {
 		dispatch(fetchYoutube());
+		dispatch(fetchMembers());
 	}, [])
 	return (
 		<>
